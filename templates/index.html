@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Financial Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container fade-in">
+        <h1 class="page-title">PRIME FUNDS TRACKER AI</h1>
+        <p class="subtitle">Next-generation wealth analytics and AI forecasting.</p>
+        
+        <div class="card-container">
+            <a href="/budget" class="card">
+                <h2>Budget Tracker</h2>
+                <p>Visualize your spending habits with interactive data processing and beautiful metrics.</p>
+            </a>
+            
+            <a href="/analysis" class="card">
+                <h2>AI Analysis</h2>
+                <p>Get smart insights and predictive forecasting on your habits driven by real market data.</p>
+            </a>
+
+            <a href="/savings" class="card">
+                <h2>Smart Savings Planner</h2>
+                <p>Set major financial goals and automatically project exact timeline completions with visual progress.</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
