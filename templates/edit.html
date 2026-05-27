@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Expense</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container slide-up">
+        <h1 class="page-title">Edit Expense</h1>
+        
+        <div class="content-box" style="max-width: 500px; margin: 0 auto;">
+            <form action="{{ url_for('edit_expense', id=expense.id) }}" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+                <label style="font-weight: 600; color: #2c3e50;">Category</label>
+                <input type="text" name="category" value="{{ expense.category }}" required style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                
+                <label style="font-weight: 600; color: #2c3e50;">Amount ($)</label>
+                <input type="number" step="0.01" name="amount" value="{{ expense.amount }}" required style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button type="submit" style="padding: 10px 20px; background: #4facfe; color: white; border: none; border-radius: 5px; cursor: pointer; flex: 1;">Save Changes</button>
+                    <a href="/budget" style="padding: 10px 20px; background: #e0e0e0; color: #333; text-decoration: none; border-radius: 5px; text-align: center; flex: 1;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
