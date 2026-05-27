@@ -9,7 +9,7 @@ import pandas as pd
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import yfinance as yf
-from google import genai
+import google.generativeai as genai
 
 # Set Matplotlib to a non-interactive backend
 import matplotlib
@@ -24,8 +24,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # Configure Gemini Client securely using environment variables
-api_key = os.environ.get("AIzaSyAJHNbu9njMA_9fSgsQ5XEYRLAWE908jyk")
-client = genai.Client(api_key=api_key)
+api_key = os.environ.get("GEMINI_API_KEY")
+if api_key:
+    genai.configure(api_key=api_key)
 
 # --- DATABASE MODELS ---
 
@@ -140,10 +141,8 @@ def analysis():
         """
         
         try:
-            response = client.models.generate_content(
-                model='gemini-2.5-flash',
-                contents=prompt
-            )
+            model = genai.GenerativeModel('gemini-2.5-flash')
+            response = model.generate_content(prompt)
             ai_suggestion = response.text
         except Exception as e:
             ai_suggestion = f"Error communicating with AI: {str(e)}"
@@ -214,3 +213,4 @@ if __name__ == '__main__':
     # Railway will inject a dynamic PORT environment variable here
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
+
