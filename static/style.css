@@ -1,0 +1,132 @@
+/* Animated Mesh Background using your color #C2D099 */
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #1e293b; /* Dark text for contrast against light green */
+    
+    /* Your color integrated into a smooth, animated moving gradient */
+    background: linear-gradient(-45deg, #C2D099, #e5edcc, #a6b877, #C2D099);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    overflow-x: hidden;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Container & Typography */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 80px auto;
+    z-index: 10;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 3.5rem;
+    font-weight: 800;
+    /* Updated title gradient to dark greens/blues for readability */
+    background: linear-gradient(to right, #0f172a, #334155, #0f172a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #475569; /* Darker slate for the subtitle */
+    font-size: 1.2rem;
+    margin-bottom: 60px;
+}
+
+/* 3D Glassmorphism Cards - Updated for Light Backgrounds */
+.card-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    perspective: 1000px;
+}
+
+.card {
+    /* Made the glass effect slightly thicker and darker to pop against the green */
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 24px;
+    padding: 50px 40px;
+    width: 340px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    transform-style: preserve-3d;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Texture & 3D Tilt */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('https://www.transparenttextures.com/patterns/cubes.png');
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.card:hover {
+    transform: translateY(-15px) rotateX(5deg) rotateY(-5deg);
+    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1), 
+                inset 0 0 20px rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 1);
+}
+
+.card:hover::before {
+    opacity: 0.2;
+}
+
+.card h2 {
+    color: #0f172a; /* Dark navy for card titles */
+    font-size: 1.8rem;
+    margin-top: 0;
+    transform: translateZ(30px);
+}
+
+.card p {
+    color: #334155; /* Slate grey for card text */
+    line-height: 1.6;
+    transform: translateZ(20px);
+}
+/* Animated Entrance */
+.fade-in { animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1); }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Graph Container */
+.chart-wrapper {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+}
