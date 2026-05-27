@@ -24,7 +24,7 @@ db = SQLAlchemy(app)
 
 # Configure Gemini Client
 # IMPORTANT: Replace the string below with your actual API key
-client = genai.Client(api_key="AIzaSyAUjh0rWzDPVTQXk-ZTfERBQMTj-ilHN_E")
+client = genai.Client(api_key="AIzaSyAJHNbu9njMA_9fSgsQ5XEYRLAWE908jyk")
 
 # --- DATABASE MODELS ---
 
