@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Savings Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container fade-in">
+        <a href="/" class="back-btn">← Back to Dashboard</a>
+        <h1 class="page-title" style="text-align: left; margin-bottom: 5px;">Smart Savings Planner</h1>
+        <p class="subtitle" style="text-align: left; margin-bottom: 30px;">Set goals, track progress, and project your financial timeline.</p>
+
+        <div class="content-box" style="margin-bottom: 40px; background: rgba(255,255,255,0.4); backdrop-filter: blur(10px); border-radius: 15px; padding: 30px;">
+            <h3 style="color: #0f172a; margin-top: 0;">Create New Goal</h3>
+            <form action="/add_goal" method="POST" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-end;">
+                <div style="flex: 2; min-width: 200px;">
+                    <label style="color: #334155; font-size: 0.9rem; font-weight: 600;">Goal Name</label>
+                    <input type="text" name="name" placeholder="e.g. New Car, Emergency Fund" required style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.8); background: rgba(255,255,255,0.7); outline: none; margin-top: 5px;">
+                </div>
+                <div style="flex: 1; min-width: 140px;">
+                    <label style="color: #334155; font-size: 0.9rem; font-weight: 600;">Target Amount</label>
+                    <input type="number" step="1" name="target" placeholder="10000" required style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.8); background: rgba(255,255,255,0.7); outline: none; margin-top: 5px;">
+                </div>
+                <div style="flex: 1; min-width: 140px;">
+                    <label style="color: #334155; font-size: 0.9rem; font-weight: 600;">Already Saved</label>
+                    <input type="number" step="1" name="current" value="0" required style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.8); background: rgba(255,255,255,0.7); outline: none; margin-top: 5px;">
+                </div>
+                <div style="flex: 1; min-width: 140px;">
+                    <label style="color: #334155; font-size: 0.9rem; font-weight: 600;">Monthly Add</label>
+                    <input type="number" step="1" name="monthly" placeholder="500" required style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.8); background: rgba(255,255,255,0.7); outline: none; margin-top: 5px;">
+                </div>
+                <div>
+                    <button type="submit" style="padding: 12px 24px; background: #0f172a; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Add Goal</button>
+                </div>
+            </form>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px;">
+            {% for goal in goals %}
+            <div style="background: rgba(255,255,255,0.5); backdrop-filter: blur(16px); border-radius: 15px; padding: 25px; text-align: left; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid rgba(255,255,255,0.8); transition: transform 0.2s;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="margin: 0; color: #0f172a; font-size: 1.4rem;">{{ goal.name }}</h2>
+                    <form action="{{ url_for('delete_goal', id=goal.id) }}" method="POST" style="margin:0;">
+                        <button type="submit" style="background: #ef4444; color: white; border: none; border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 0.8rem; font-weight: bold;">✕</button>
+                    </form>
+                </div>
+                
+                <p style="color: #334155; font-size: 1rem; margin-top: 10px;">
+                    <strong>{{ "%.0f"|format(goal.current) }}</strong> saved of {{ "%.0f"|format(goal.target) }}
+                </p>
+                
+                <div style="width: 100%; background: rgba(15, 23, 42, 0.1); border-radius: 10px; height: 12px; overflow: hidden; margin: 15px 0;">
+<strong>${{ "%.0f"|format(goal.current) }}</strong> saved of ${{ "%.0f"|format(goal.target) }}                </div>
+                
+                <div style="display: flex; justify-content: space-between; color: #475569; font-size: 0.9rem; font-weight: 600;">
+                    <span>{{ goal.progress }}%</span>
+                    <span>+{{ "%.0f"|format(goal.monthly) }}/mo</span>
+                </div>
+                
+                <hr style="border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 20px 0 15px 0;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span style="font-size: 0.75rem; color: #475569; display: block; text-transform: uppercase; letter-spacing: 0.5px;">Target Date</span>
+                        <strong style="font-size: 1.1rem; color: #0f172a;">{{ goal.eta }}</strong>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="font-size: 0.75rem; color: #475569; display: block; text-transform: uppercase; letter-spacing: 0.5px;">Time Left</span>
+                        <strong style="font-size: 1.1rem; color: #0f172a;">{{ goal.months_left }} Months</strong>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #475569;">
+                <p>No savings goals created yet. Start planning your future above!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
