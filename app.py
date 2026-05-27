@@ -1,5 +1,4 @@
 import io
-import os
 import base64
 import os
 import json
@@ -24,9 +23,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///budget.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# Configure Gemini Client
-# IMPORTANT: Replace the string below with your actual API key
-client = genai.Client(api_key="AIzaSyAJHNbu9njMA_9fSgsQ5XEYRLAWE908jyk")
+# Configure Gemini Client securely using environment variables
+api_key = os.environ.get("AIzaSyAJHNbu9njMA_9fSgsQ5XEYRLAWE908jyk")
+client = genai.Client(api_key=api_key)
 
 # --- DATABASE MODELS ---
 
@@ -212,4 +211,6 @@ def delete_goal(id):
     return redirect(url_for('savings'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Railway will inject a dynamic PORT environment variable here
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
