@@ -24,9 +24,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # Configure Gemini Client securely using environment variables
-api_key = os.environ.get("AIzaSyAJHNbu9njMA_9fSgsQ5XEYRLAWE908jyk")
-client = genai.Client(api_key=api_key)
-
+#---------------------------------------------------======
+api_key = os.environ.get("PASTE YOUR KEYS HERE")    #=====
+client = genai.Client(api_key=api_key)              #=====
+#---------------------------------------------------======
 # --- DATABASE MODELS ---
 
 class Expense(db.Model):
